@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+# gather input
+HOLOLENS_YARN_RUN_COMMAND="${HOLOLENS_YARN_RUN_COMMAND?hololens.yarn-run.command required}"
+
+
+# install dependencies
+>&2 echo
+>&2 echo "executing: yarn install"
+>&2 yarn install --silent
+
+
+# fix interpreters
+>&2 echo
+>&2 echo "fixing interpreters: node_modules/.bin/*"
+sed -e "s#\#\!/usr/bin/env node#\#\!$(hab pkg path core/node)/bin/node#" \
+  --in-place \
+  --follow-symlinks \
+  node_modules/.bin/*
+
+
+# execute target command
+>&2 echo
+>&2 echo "executing: yarn run ${HOLOLENS_YARN_RUN_COMMAND}"
+yarn run "${HOLOLENS_YARN_RUN_COMMAND}"

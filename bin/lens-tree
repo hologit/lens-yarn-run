@@ -1,0 +1,44 @@
+#!/bin/bash -e
+
+INPUT_TREE="${1?<input> required}"
+OUTPUT_DIR="${HOLOLENS_YARN_RUN_OUTPUT_DIR}"
+
+# redirect all output to stderr
+{
+  # export git tree to disk
+  echo "Exporting input tree to scratch directory: ${INPUT_TREE}"
+  git holo lens export-tree "${INPUT_TREE}"
+
+
+  # execute yarn-run
+  command_output=$(yarn-run)
+  run_status=$?
+
+
+  # process result
+  if [ $run_status -ne 0 ]; then
+    echo -e "\nyarn run failed with exit status ${run_status}"
+    exit ${run_status}
+  fi
+
+  echo
+  echo "yarn run completed successfully"
+
+
+  # add output to git index if OUTPUT_DIR is declared
+  if [ -n "${OUTPUT_DIR}" ]; then
+    git add "${OUTPUT_DIR}"
+  fi
+
+} 1>&2
+
+# output tree hash
+if [ -n "${OUTPUT_DIR}" ]; then
+  if [ "${OUTPUT_DIR}" == "." ]; then
+    git write-tree
+  else
+    git write-tree --prefix="${OUTPUT_DIR}"
+  fi
+else
+  echo "${command_output}"
+fi
