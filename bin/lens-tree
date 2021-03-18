@@ -11,7 +11,11 @@ OUTPUT_DIR="${HOLOLENS_YARN_RUN_OUTPUT_DIR}"
 
 
   # execute yarn-run
-  command_output=$(yarn-run)
+  if [ -n "${OUTPUT_DIR}" ]; then
+    yarn-run
+  else
+    command_output="$(yarn-run)"
+  fi
   run_status=$?
 
 
