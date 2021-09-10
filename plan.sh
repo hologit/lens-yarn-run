@@ -6,6 +6,8 @@ pkg_license=("Apache-2.0")
 
 pkg_deps=(
   core/bash
+  core/gcc
+  core/make
   core/yarn
   jarvus/hologit
 )
