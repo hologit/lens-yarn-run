@@ -7,7 +7,7 @@ HOLOLENS_YARN_RUN_COMMAND="${HOLOLENS_YARN_RUN_COMMAND?hololens.yarn-run.command
 # install dependencies
 >&2 echo
 >&2 echo "executing: yarn install"
->&2 yarn install --silent
+>&2 yarn install
 
 
 # fix interpreters
