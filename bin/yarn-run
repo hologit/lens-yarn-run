@@ -22,4 +22,9 @@ sed -e "s#\#\!/usr/bin/env node#\#\!$(hab pkg path core/node14)/bin/node#" \
 # execute target command
 >&2 echo
 >&2 echo "executing: yarn run ${HOLOLENS_YARN_RUN_COMMAND}"
-yarn run --silent "${HOLOLENS_YARN_RUN_COMMAND}"
+if [ -n "${OUTPUT_DIR}" ]; then
+  yarn run "${HOLOLENS_YARN_RUN_COMMAND}"
+else
+  # suppress yarn run output if we're reading the tree hash from output
+  yarn run --silent "${HOLOLENS_YARN_RUN_COMMAND}"
+fi
