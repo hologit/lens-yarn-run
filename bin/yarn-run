@@ -13,7 +13,7 @@ HOLOLENS_YARN_RUN_COMMAND="${HOLOLENS_YARN_RUN_COMMAND?hololens.yarn-run.command
 # fix interpreters
 >&2 echo
 >&2 echo "fixing interpreters: node_modules/.bin/*"
-sed -e "s#\#\!/usr/bin/env node#\#\!$(hab pkg path core/node)/bin/node#" \
+sed -e "s#\#\!/usr/bin/env node#\#\!$(hab pkg path core/node14)/bin/node#" \
   --in-place \
   --follow-symlinks \
   node_modules/.bin/*
