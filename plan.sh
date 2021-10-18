@@ -8,6 +8,7 @@ pkg_deps=(
   core/bash
   core/gcc
   core/make
+  core/python39
   core/yarn
   jarvus/hologit
 )
